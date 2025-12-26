@@ -1,7 +1,7 @@
 # QuizMaker Implementation Roadmap
 
-**Last Updated:** December 26, 2025
-**Current Phase:** Phase 1A - Quiz Creation (Backend)
+**Last Updated:** December 27, 2025
+**Current Phase:** Phase 1B - Question Management
 
 ---
 
@@ -9,16 +9,18 @@
 
 ### Current Status
 - ✅ Phase 0: Foundation (COMPLETED)
-- 🔄 Phase 1: Quiz Management (IN PROGRESS - 0%)
+- ✅ Phase 1A: Quiz Creation (COMPLETED - 100%)
+- 🔄 Phase 1B: Question Management (NEXT - 0%)
 - ⏳ Phase 2: Quiz Taking (PENDING)
 - ⏳ Phase 3: Dashboard & Analytics (PENDING)
 - ⏳ Phase 4: Polish & Optimization (PENDING)
 
 ### What's Next?
 **Immediate Next Steps:**
-1. Create quiz service (`lib/services/quiz.service.ts`)
-2. Create question service (`lib/services/question.service.ts`)
-3. Create Server Actions for quiz management (`app/actions/quiz.ts`)
+1. Create question service methods in `lib/services/quiz-service.ts`
+2. Create question API routes (`app/api/quizzes/[id]/questions/route.ts`)
+3. Build question editor components with drag-and-drop
+4. Apply enhanced UI theme pattern from Phase 1A
 
 ---
 
@@ -52,100 +54,165 @@
 
 ---
 
-### 🔄 Phase 1: Quiz Management (IN PROGRESS)
-**Estimated Duration:** 4-5 days
-**Current Progress:** 0%
+### ✅ Phase 1A: Quiz Creation (COMPLETED)
+**Duration:** 2 days
+**Status:** ✅ 100% Complete
+**Checkpoint:** `phase-1a-complete`
 **Goal:** Enable instructors to create, edit, and manage quizzes
 
-#### 🎯 Phase 1A: Quiz Creation (Current Focus)
-**Duration:** 2 days
-**Status:** 🔄 Starting Now
+#### What Was Built:
 
-**Database Verification Checklist:**
-- [ ] Verify existing schema from Phase 0
-  - [ ] Confirm `quizzes` table exists with correct columns
-  - [ ] Confirm `questions` table exists with correct columns
-  - [ ] Confirm `answer_options` table exists with correct columns
-  - [ ] Verify foreign key constraints are in place
-  - [ ] Verify indexes exist: `idx_quizzes_instructor`, `idx_quizzes_published`, `idx_questions_quiz`, `idx_answer_options_question`
+**Database Verification:**
+- ✅ Verified existing schema from Phase 0
+- ✅ Confirmed all tables exist with correct columns
+- ✅ Verified foreign key constraints
+- ✅ Tested database operations (insert, update, delete, cascade)
+- ✅ Verified boolean/integer conversion for `is_published`
+
+**Backend Implementation:**
+- ✅ Created `lib/services/quiz-service.ts`
+  - ✅ `createQuiz()` - Create new quiz with validation
+  - ✅ `getQuizById()` - Retrieve quiz with all details
+  - ✅ `getQuizzesByInstructor()` - List instructor's quizzes
+  - ✅ `getQuizWithInstructor()` - Get quiz with instructor info
+  - ✅ `getQuizStats()` - Get quiz statistics
+  - ✅ `getQuizQuestionCount()` - Count questions in quiz
+  - ✅ `updateQuiz()` - Update quiz metadata
+  - ✅ `deleteQuiz()` - Delete quiz (cascade delete questions)
+  - ✅ `publishQuiz()` - Make quiz visible to students
+  - ✅ `unpublishQuiz()` - Hide quiz from students
+  - ✅ `getPublishedQuizzes()` - Get all published quizzes
+
+- ✅ Created `app/api/quizzes/route.ts` - Quiz API endpoints
+  - ✅ GET - List instructor's quizzes
+  - ✅ POST - Create new quiz
+
+- ✅ Created `app/api/quizzes/[id]/route.ts` - Single quiz operations
+  - ✅ GET - Get quiz details
+  - ✅ PUT - Update quiz
+  - ✅ DELETE - Delete quiz
+
+- ✅ Created `app/api/quizzes/[id]/[action]/route.ts` - Quiz actions
+  - ✅ POST /publish - Publish quiz
+  - ✅ POST /unpublish - Unpublish quiz
+
+- ✅ Created `lib/schemas/quiz-schema.ts`
+  - ✅ `createQuizSchema` - Quiz creation validation
+  - ✅ `updateQuizSchema` - Quiz update validation
+
+**Frontend Implementation:**
+- ✅ Created `app/dashboard/quizzes/page.tsx` - Quiz list page
+  - ✅ **Enhanced UI with theme support (light/dark mode)**
+  - ✅ **Gradient backgrounds and modern styling**
+  - ✅ Search functionality
+  - ✅ Filter by status (all, draft, published)
+  - ✅ Sort by created date, title, updated date
+  - ✅ Statistics cards
+  - ✅ Empty state when no quizzes
+  - ✅ Back to dashboard navigation
+
+- ✅ Created `app/dashboard/quizzes/new/page.tsx` - Create quiz form
+  - ✅ **Enhanced UI with theme support**
+  - ✅ **Sticky header with branding and theme toggle**
+  - ✅ Title input (required)
+  - ✅ Description textarea
+  - ✅ Duration input (minutes, optional)
+  - ✅ Passing score input (percentage)
+  - ✅ Form validation with error display
+  - ✅ Success/error notifications
+
+- ✅ Created `app/dashboard/quizzes/[id]/page.tsx` - Quiz detail page
+  - ✅ **Enhanced UI with theme support**
+  - ✅ **Gradient stat cards**
+  - ✅ Quiz metadata display
+  - ✅ Statistics overview
+  - ✅ Edit and delete actions
+  - ✅ Manage questions button
+
+- ✅ Created `app/dashboard/quizzes/[id]/edit/page.tsx` - Edit quiz form
+  - ✅ **Enhanced UI with theme support**
+  - ✅ Pre-populated form fields
+  - ✅ Update validation
+
+- ✅ Created `app/dashboard/quizzes/[id]/questions/page.tsx` - Questions placeholder
+  - ✅ **Enhanced UI with theme support**
+  - ✅ Coming soon message
+  - ✅ Phase 1B preview
+
+- ✅ Created `components/quiz/quiz-list.tsx`
+  - ✅ Table layout with hover effects
+  - ✅ Status badges (draft, published)
+  - ✅ Action buttons (view, edit, delete, publish/unpublish)
+  - ✅ Responsive design
+  - ✅ Integrated ConfirmDialog
+
+- ✅ Created `components/quiz/create-quiz-form.tsx`
+  - ✅ Form with validation
+  - ✅ Error handling
+  - ✅ Success navigation
+
+- ✅ Created `components/quiz/edit-quiz-form.tsx`
+  - ✅ Pre-populated form
+  - ✅ Update handling
+
+- ✅ Created `components/ui/confirm-dialog.tsx`
+  - ✅ Reusable confirmation dialog
+  - ✅ Customizable title and description
+
+**UI/UX Enhancements (Applied Across All Pages):**
+- ✅ **Theme Toggle Integration**
+  - ✅ Light/dark mode support
+  - ✅ Consistent theme provider
+  - ✅ Theme toggle button in header
+  - ✅ Persisted theme preference
   
-- [ ] Check for any missing indexes for Phase 1A queries
-  - [ ] Verify index on `quizzes.instructor_id` for instructor quiz list
-  - [ ] Verify index on `quizzes.is_published` for filtering
-  - [ ] Verify index on `questions.quiz_id` for question retrieval
+- ✅ **Modern Design System**
+  - ✅ Gradient backgrounds (blue → white → purple)
+  - ✅ Glassmorphism header (backdrop blur)
+  - ✅ Animated fade-in effects
+  - ✅ Hover transitions on cards
+  - ✅ Gradient text for branding
+  - ✅ Colorful stat cards with gradients
   
-- [ ] Test database operations
-  - [ ] Test quiz insertion with all fields
-  - [ ] Test quiz retrieval by ID
-  - [ ] Test cascade delete (delete quiz should delete questions)
-  - [ ] Test boolean/integer conversion for `is_published`
-
-**Backend Checklist:**
-- [ ] Create `lib/services/quiz.service.ts`
-  - [ ] `createQuiz()` - Create new quiz with validation
-  - [ ] `getQuizById()` - Retrieve quiz with all details
-  - [ ] `getQuizzesByInstructor()` - List instructor's quizzes
-  - [ ] `updateQuiz()` - Update quiz metadata
-  - [ ] `deleteQuiz()` - Delete quiz (cascade delete questions)
-  - [ ] `publishQuiz()` - Make quiz visible to students
-  - [ ] `unpublishQuiz()` - Hide quiz from students
-
-- [ ] Create `lib/services/question.service.ts`
-  - [ ] `createQuestion()` - Add question to quiz
-  - [ ] `getQuestionsByQuiz()` - Get all questions for a quiz
-  - [ ] `updateQuestion()` - Modify question details
-  - [ ] `deleteQuestion()` - Remove question
-  - [ ] `reorderQuestions()` - Change question order
-  - [ ] `createAnswerOption()` - Add answer option to question
-  - [ ] `updateAnswerOption()` - Modify answer option
-  - [ ] `deleteAnswerOption()` - Remove answer option
-
-- [ ] Create `app/actions/quiz.ts`
-  - [ ] `createQuizAction()` - Server action for quiz creation
-  - [ ] `updateQuizAction()` - Server action for quiz update
-  - [ ] `deleteQuizAction()` - Server action for quiz deletion
-  - [ ] `publishQuizAction()` - Server action to publish quiz
-  - [ ] `getInstructorQuizzesAction()` - Get all instructor quizzes
-
-- [ ] Create `lib/schemas/quiz.schema.ts`
-  - [ ] Quiz validation schema
-  - [ ] Quiz update schema
-
-- [ ] Create `lib/schemas/question.schema.ts`
-  - [ ] Question validation schema
-  - [ ] Answer option schema
-
-**Frontend Checklist:**
-- [ ] Create `app/instructor/page.tsx` - Instructor dashboard
-  - [ ] Welcome header with instructor name
-  - [ ] Statistics cards (total quizzes, published, drafts)
-  - [ ] Quiz list component
-  - [ ] Create new quiz button
-  - [ ] Empty state when no quizzes
-
-- [ ] Create `app/instructor/quiz/new/page.tsx` - New quiz form
-  - [ ] Title input (required)
-  - [ ] Description textarea
-  - [ ] Duration input (minutes, optional)
-  - [ ] Passing score input (percentage)
-  - [ ] Save as draft button
-  - [ ] Continue to questions button
-  - [ ] Form validation with error display
-
-- [ ] Create `components/instructor/quiz-list.tsx`
-  - [ ] Table/card layout for quizzes
-  - [ ] Status badges (draft, published)
-  - [ ] Quick actions menu (edit, delete, publish/unpublish)
-  - [ ] Sort and filter options
-  - [ ] Responsive design
-
-- [ ] Create `components/ui/confirm-dialog.tsx` - Confirmation dialog
-  - [ ] Reusable dialog for delete confirmations
+- ✅ **Consistent Header Pattern**
+  - ✅ Sticky header with blur effect
+  - ✅ QuizMaker logo with gradient
+  - ✅ User role badge (Instructor)
+  - ✅ Theme toggle button
+  - ✅ Logout button
+  - ✅ Navigation breadcrumbs
+  
+- ✅ **Enhanced Components**
+  - ✅ Cards with shadow and hover effects
+  - ✅ Buttons with gradient backgrounds
+  - ✅ Status badges with appropriate colors
+  - ✅ Icons from lucide-react
+  - ✅ Responsive layouts
 
 **Testing:**
-- [ ] Unit tests for `quiz.service.ts`
-- [ ] Unit tests for `question.service.ts`
-- [ ] Integration tests for quiz creation flow
+- ✅ Unit tests for `quiz-service.ts`
+  - ✅ All CRUD operations tested
+  - ✅ Publish/unpublish tested
+  - ✅ Database mocking
+  - ✅ Error handling tested
+- ✅ Manual testing of all UI flows
+
+**Documentation:**
+- ✅ Created `RESTORE_CHECKPOINT.md` - Guide to restore this working state
+- ✅ Created git tag `phase-1a-complete` for easy rollback
+
+---
+
+### 🔄 Phase 1B: Question Management (NEXT)
+**Duration:** 2-3 days
+**Status:** ⏳ Ready to Start
+**Goal:** Enable instructors to add and manage questions within quizzes
+
+**Important:** Continue the UI enhancement pattern from Phase 1A:
+- Apply theme toggle to all new pages
+- Use gradient backgrounds and glassmorphism
+- Maintain consistent header pattern
+- Use animated transitions and hover effects
 
 ---
 
@@ -161,39 +228,45 @@
 - [ ] Verify cascade deletes work (delete question → delete options)
 
 **Frontend Checklist:**
-- [ ] Create `app/instructor/quiz/[id]/questions/page.tsx`
+- [ ] Update `app/dashboard/quizzes/[id]/questions/page.tsx` (replace placeholder)
+  - [ ] **Apply Phase 1A UI theme (header, gradients, theme toggle)**
   - [ ] Question list with drag-and-drop reordering
   - [ ] Add question button
   - [ ] Question type selector dropdown
   - [ ] Question cards with edit/delete actions
   - [ ] Save and publish quiz button
 
-- [ ] Create `components/instructor/question-editor.tsx`
+- [ ] Create `components/question/question-editor.tsx`
+  - [ ] **Enhanced UI with theme support**
   - [ ] Question text rich text editor
   - [ ] Points allocation input
   - [ ] Question type specific fields
   - [ ] Save/cancel buttons
   - [ ] Real-time validation
 
-- [ ] Create `components/instructor/multiple-choice-editor.tsx`
+- [ ] Create `components/question/multiple-choice-editor.tsx`
+  - [ ] **Modern card design with gradients**
   - [ ] Add/remove answer options
   - [ ] Mark correct answer (radio selection)
   - [ ] Option text inputs
   - [ ] Minimum 2 options validation
 
-- [ ] Create `components/instructor/true-false-editor.tsx`
+- [ ] Create `components/question/true-false-editor.tsx`
+  - [ ] **Enhanced UI with theme support**
   - [ ] Radio buttons for True/False
   - [ ] Correct answer selection
 
-- [ ] Create `components/instructor/short-answer-editor.tsx`
+- [ ] Create `components/question/short-answer-editor.tsx`
+  - [ ] **Enhanced UI with theme support**
   - [ ] Sample answer input
   - [ ] Answer guidelines for grading
   - [ ] Character limit options
 
-- [ ] Create `components/instructor/quiz-preview.tsx`
-  - [ ] Full quiz preview modal
+- [ ] Create `components/question/quiz-preview.tsx`
+  - [ ] **Full-screen modal with theme support**
   - [ ] Navigate through questions
   - [ ] Student view simulation
+  - [ ] Beautiful preview cards
 
 **Backend Checklist:**
 - [ ] Create `app/actions/question.ts`
@@ -213,6 +286,13 @@
 **Estimated Duration:** 3-4 days
 **Goal:** Enable students to take quizzes and see results
 
+**UI Guidelines:** Apply Phase 1A enhanced UI pattern:
+- Sticky header with theme toggle
+- Gradient backgrounds
+- Animated transitions
+- Responsive cards with hover effects
+- Student-specific color scheme (different from instructor)
+
 #### Phase 2A: Quiz Discovery & Start (1 day)
 
 **Database Verification Checklist:**
@@ -229,8 +309,12 @@
 
 **Frontend:**
 - [ ] Student dashboard page
+  - [ ] **Apply Phase 1A UI theme (with student-specific colors)**
+  - [ ] **Theme toggle and consistent header**
 - [ ] Quiz list for students
+  - [ ] **Enhanced cards with gradients**
 - [ ] Quiz detail page with start button
+  - [ ] **Modern UI with theme support**
 
 #### Phase 2B: Quiz Taking Interface (2 days)
 
@@ -247,9 +331,14 @@
 
 **Frontend:**
 - [ ] Quiz taking page with timer
+  - [ ] **Full-screen quiz interface with theme support**
+  - [ ] **Beautiful timer display with animations**
 - [ ] Question display components
+  - [ ] **Enhanced question cards with smooth transitions**
 - [ ] Navigation and progress tracking
+  - [ ] **Modern progress bar with gradients**
 - [ ] Submit confirmation
+  - [ ] **Animated confirmation dialog**
 
 #### Phase 2C: Quiz Results & Review (1 day)
 
@@ -265,14 +354,26 @@
 
 **Frontend:**
 - [ ] Results page with score
+  - [ ] **Celebratory UI with gradient cards**
+  - [ ] **Animated score reveal**
+  - [ ] **Theme support**
 - [ ] Review page with correct answers
+  - [ ] **Color-coded correct/incorrect answers**
+  - [ ] **Smooth transitions**
 - [ ] Performance feedback
+  - [ ] **Visual charts and progress indicators**
 
 ---
 
 ### ⏳ Phase 3: Dashboard & Analytics (PENDING)
 **Estimated Duration:** 3 days
 **Goal:** Provide comprehensive analytics and insights
+
+**UI Guidelines:** Continue Phase 1A theme pattern with data visualization enhancements:
+- Beautiful charts with gradient colors
+- Interactive data visualizations
+- Theme-aware chart colors
+- Animated statistics
 
 #### Phase 3A: Student Dashboard (1 day)
 
@@ -284,8 +385,15 @@
 
 **Backend:**
 - [ ] Student statistics service
+
+**Frontend:**
 - [ ] Enhanced dashboard with charts
+  - [ ] **Gradient stat cards (like Phase 1A)**
+  - [ ] **Theme-aware charts**
+  - [ ] **Animated data transitions**
 - [ ] Attempt history table
+  - [ ] **Enhanced table with hover effects**
+  - [ ] **Status badges**
 
 #### Phase 3B: Instructor Analytics (2 days)
 
@@ -298,9 +406,16 @@
 
 **Backend:**
 - [ ] Instructor analytics service
+
+**Frontend:**
 - [ ] Quiz analytics page
+  - [ ] **Apply Phase 1A UI theme**
+  - [ ] **Beautiful data visualizations**
+  - [ ] **Theme-aware color schemes**
 - [ ] Score distribution charts
+  - [ ] **Gradient charts with animations**
 - [ ] Question difficulty analysis
+  - [ ] **Interactive visual indicators**
 
 ---
 
@@ -345,10 +460,30 @@
 ## Development Guidelines
 
 ### Order of Implementation
-1. **Always backend first:** Services → Server Actions → Frontend
+1. **Always backend first:** Services → API Routes → Frontend
 2. **Always schema first:** Define Zod schemas before implementing forms
 3. **Always test critical paths:** Authentication, quiz submission, grading
 4. **Always validate ownership:** Check user permissions on every action
+5. **Always apply UI theme:** Use Phase 1A UI pattern for consistency
+
+### UI/UX Standards (Established in Phase 1A)
+**All new pages MUST include:**
+- ✅ Sticky header with glassmorphism effect
+- ✅ Theme toggle button (light/dark mode)
+- ✅ QuizMaker branding with gradient text
+- ✅ User role badge
+- ✅ Gradient background (blue → white → purple)
+- ✅ Cards with shadow and hover effects
+- ✅ Animated transitions (fade-in, slide)
+- ✅ Responsive design for mobile
+- ✅ Icons from lucide-react
+- ✅ Consistent button styles with gradients
+- ✅ Status badges with appropriate colors
+
+**Reference Implementation:**
+- See `app/dashboard/quizzes/page.tsx` for complete example
+- See `app/dashboard/quizzes/new/page.tsx` for form patterns
+- See `app/dashboard/quizzes/[id]/page.tsx` for detail pages
 
 ### Naming Conventions
 - **Services:** `{entity}.service.ts` (e.g., `quiz.service.ts`)
@@ -388,12 +523,24 @@
 
 ## Success Criteria by Phase
 
-### Phase 1 Success:
-- ✅ Instructors can create quizzes with title, description, duration
-- ✅ Instructors can add multiple choice, true/false, and short answer questions
-- ✅ Instructors can edit and delete quizzes and questions
+### Phase 1A Success (✅ ACHIEVED):
+- ✅ Instructors can create quizzes with title, description, duration, passing score
+- ✅ Instructors can view all their quizzes with search, filter, and sort
+- ✅ Instructors can edit quiz details
+- ✅ Instructors can delete quizzes with confirmation
 - ✅ Instructors can publish/unpublish quizzes
 - ✅ All operations validate ownership
+- ✅ Beautiful UI with theme toggle (light/dark mode)
+- ✅ Consistent design system across all pages
+- ✅ Responsive design for mobile/tablet
+- ✅ Comprehensive unit tests
+
+### Phase 1B Success:
+- ✅ Instructors can add multiple choice, true/false, and short answer questions
+- ✅ Instructors can edit and delete questions
+- ✅ Instructors can reorder questions via drag-and-drop
+- ✅ Instructors can preview quiz from student perspective
+- ✅ UI follows Phase 1A design patterns
 
 ### Phase 2 Success:
 - ✅ Students can see published quizzes

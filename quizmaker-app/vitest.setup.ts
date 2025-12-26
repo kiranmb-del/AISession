@@ -1,6 +1,9 @@
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
+// Mock server-only module
+vi.mock("server-only", () => ({}));
+
 // Mock Next.js router
 vi.mock("next/navigation", () => ({
   useRouter: () => ({

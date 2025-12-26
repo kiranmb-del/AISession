@@ -14,7 +14,7 @@ import { getUserFromToken } from "@/lib/auth";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string; action: string } }
+  { params }: { params: Promise<{ id: string; action: string }> }
 ) {
   try {
     const user = await getUserFromToken(request);
@@ -30,8 +30,7 @@ export async function POST(
       );
     }
 
-    const quizId = params.id;
-    const action = params.action;
+    const { id: quizId, action } = await params;
 
     if (action === "publish") {
       // Check if quiz can be published

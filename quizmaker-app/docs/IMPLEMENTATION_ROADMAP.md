@@ -1,9 +1,9 @@
 # QuizMaker Implementation Roadmap
 
-**Last Updated:** December 27, 2025
-**Current Phase:** Phase 2 - Quiz Taking
-**Latest Commit:** `90d9228` - Phase 1B Complete
-**Latest Tag:** `phase-1b-complete`
+**Last Updated:** December 28, 2025
+**Current Phase:** Phase 2B - Quiz Taking Interface
+**Latest Commit:** Phase 2A Complete + Bug Fixes
+**Latest Tag:** `phase-2a-complete` (ready to tag)
 
 ---
 
@@ -13,17 +13,22 @@
 - ✅ Phase 0: Foundation (COMPLETED - 100%)
 - ✅ Phase 1A: Quiz Creation (COMPLETED - 100%)
 - ✅ Phase 1B: Question Management (COMPLETED - 100%)
-- 🔄 Phase 2: Quiz Taking (NEXT - 0%)
+- ✅ Phase 2A: Quiz Discovery & Start (COMPLETED - 100%)
+- ✅ Phase 2A+: Bug Fixes & Polish (COMPLETED - 100%)
+- 🔄 Phase 2B: Quiz Taking Interface (NEXT - 0%)
+- ⏳ Phase 2C: Quiz Results & Review (PENDING)
 - ⏳ Phase 3: Dashboard & Analytics (PENDING)
 - ⏳ Phase 4: Polish & Optimization (PENDING)
 
 ### What's Next?
-**Immediate Next Steps (Phase 2A):**
-1. Create student dashboard page
-2. Implement quiz discovery/browsing for students
-3. Create quiz detail view for students
-4. Build "Start Quiz" functionality
-5. Create quiz attempt tracking
+**Immediate Next Steps (Phase 2B):**
+1. Create answer service for saving/retrieving student answers
+2. Build quiz taking page with question display
+3. Implement timer functionality
+4. Create answer input components (MC, T/F, Short Answer)
+5. Add question navigation
+6. Implement auto-save
+7. Create submit confirmation
 
 ---
 
@@ -299,41 +304,221 @@
 
 ---
 
-### ⏳ Phase 2: Quiz Taking (PENDING)
-**Estimated Duration:** 3-4 days
-**Goal:** Enable students to take quizzes and see results
+### ⏳ Phase 2: Quiz Taking (IN PROGRESS - 33% Complete)
 
-**UI Guidelines:** Apply Phase 1A enhanced UI pattern:
-- Sticky header with theme toggle
-- Gradient backgrounds
-- Animated transitions
-- Responsive cards with hover effects
-- Student-specific color scheme (different from instructor)
+Phase 2 is broken into three sub-phases:
 
-#### Phase 2A: Quiz Discovery & Start (1 day)
+#### ✅ Phase 2A: Quiz Discovery & Start (COMPLETED)
+**Duration:** 1 session
+**Completion Date:** December 28, 2025
+**Status:** ✅ 100% Complete
+**Checkpoint:** `phase-2a-complete` (ready to tag)
+**Goal:** Enable students to browse and start quizzes
 
-**Database Verification Checklist:**
-- [ ] Verify `quiz_attempts` table ready for use
-- [ ] Verify foreign keys: `quiz_id` → quizzes, `student_id` → users
-- [ ] Verify indexes: `idx_attempts_student`, `idx_attempts_quiz`
-- [ ] Test attempt creation with default values
-- [ ] Verify `status` CHECK constraint works
+**What Was Built:**
+
+**Backend Implementation:**
+- ✅ Quiz attempt service with 9 methods:
+  - `createQuizAttempt()` - Create new attempt with duplicate prevention
+  - `getAttemptById()` - Retrieve single attempt
+  - `getAttemptWithDetails()` - Get attempt with quiz/instructor info
+  - `getAttemptsByStudent()` - Get all attempts for a student
+  - `getActiveAttempt()` - Check for in-progress attempts
+  - `getAttemptsByQuiz()` - Get student's attempts for specific quiz
+  - `completeAttempt()` - Mark attempt as completed with score
+  - `abandonAttempt()` - Mark attempt as abandoned
+  - `getStudentStats()` - Calculate student statistics
+
+- ✅ Student API routes (3 endpoints):
+  - GET `/api/student/quizzes` - List published quizzes
+  - GET `/api/student/quizzes/[id]` - Quiz detail with attempt status
+  - POST `/api/student/quizzes/[id]/start` - Start new attempt
+
+**Frontend Implementation:**
+- ✅ Student dashboard (`/student/dashboard/page.tsx`)
+  - Animated stat cards (quizzes taken, completed, avg score)
+  - Recent activity section with last 5 attempts
+  - Quick action buttons (Browse, View Attempts)
+  - Continue/View Results buttons for attempts
+  - Empty state for new students
+  - Emerald/cyan gradient theme
+
+- ✅ Quiz browsing page (`/student/quizzes/page.tsx`)
+  - Grid layout of quiz cards (3 columns)
+  - Stats banner showing available quizzes
+  - Empty state when no quizzes published
+
+- ✅ Quiz detail page (`/student/quizzes/[id]/page.tsx`)
+  - Two-column layout with quiz info
+  - Active attempt alert (if exists)
+  - Previous attempts history with scores
+  - Tips for success card
+  - Start/Continue quiz buttons
+
+- ✅ Components:
+  - `QuizCard` - Beautiful card with hover effects
+  - `StartQuizButton` - Client component with loading state
+
+- ✅ Placeholder pages for Phase 2B/2C:
+  - Quiz taking page
+  - Attempts history page
+  - Results page
+
+**UI/UX Features:**
+- ✅ Student-specific theme (emerald/cyan gradients)
+- ✅ Sticky header with glassmorphism
+- ✅ Animated transitions and hover effects
+- ✅ Theme toggle (light/dark mode)
+- ✅ Status badges and icons
+- ✅ Responsive design
+- ✅ Empty states and loading states
+
+**Testing:**
+- ✅ 18 comprehensive unit tests (100% passing)
+- ✅ All service methods covered
+- ✅ Success and error scenarios tested
+- ✅ Edge cases covered
+
+**Key Files Created:**
+- `src/lib/services/quiz-attempt-service.ts` - Attempt management (242 lines)
+- `src/lib/services/quiz-attempt-service.test.ts` - Unit tests (399 lines)
+- `src/app/api/student/quizzes/route.ts` - List quizzes API
+- `src/app/api/student/quizzes/[id]/route.ts` - Quiz detail API
+- `src/app/api/student/quizzes/[id]/start/route.ts` - Start quiz API
+- `src/app/student/dashboard/page.tsx` - Student dashboard (237 lines)
+- `src/app/student/quizzes/page.tsx` - Browse quizzes (154 lines)
+- `src/app/student/quizzes/[id]/page.tsx` - Quiz detail (303 lines)
+- `src/components/student/quiz-card.tsx` - Quiz card component (98 lines)
+- `src/components/student/start-quiz-button.tsx` - Start button (64 lines)
+- `src/components/ui/alert.tsx` - Alert component (via shadcn)
+
+**Documentation:**
+- `PHASE2A_COMPLETE.md` - Complete phase summary
+- `PHASE2A_SUMMARY.md` - Implementation summary
+- `PHASE2A_TESTING_GUIDE.md` - Testing guide
+
+**Statistics:**
+- Lines of Code: ~2,800
+- Components Created: 2
+- API Endpoints: 3
+- Service Methods: 9
+- Tests: 18 (100% passing)
+- Files Created: 13 (10 implementation + 3 placeholders)
+
+---
+
+#### ✅ Phase 2A+: Bug Fixes & Polish (COMPLETED)
+**Duration:** Several hours (same day as Phase 2A)
+**Completion Date:** December 28, 2025
+**Status:** ✅ 100% Complete
+**Goal:** Fix critical bugs preventing student flow from working
+
+**Critical Issues Resolved:**
+
+1. **Authentication Property Mismatch (CRITICAL)** ✅
+   - Fixed `user.role` → `user.userType` in all student pages/APIs
+   - Fixed `user.id` → `user.userId` in all student pages/APIs
+   - Added proper user data fetching with `getUserById()`
+   - **Impact:** Students can now navigate and use all features
+
+2. **ThemeToggle Import Error (BLOCKER)** ✅
+   - Changed from default import to named import
+   - Fixed runtime error causing page rendering failures
+   - **Impact:** All pages now render correctly
+
+3. **Logout Functionality (HIGH)** ✅
+   - Replaced non-existent `/api/auth/logout` with `logoutAction`
+   - Standardized logout across all pages
+   - **Impact:** Logout now works properly
+
+4. **Login Redirect Flow (MEDIUM)** ✅
+   - Updated `loginAction` and `registerAction` to check user type
+   - Students now go directly to `/student/dashboard`
+   - Instructors go to `/dashboard`
+   - **Impact:** Better UX, no unnecessary redirects
+
+5. **User Data Display (LOW)** ✅
+   - Fixed missing `full_name` display
+   - Proper user data available in all pages
+   - **Impact:** Complete user information shown
+
+**Files Modified (12 total):**
+- Student Pages (6): dashboard, quizzes, quiz detail, attempt, attempts list, results
+- Student APIs (3): list, detail, start
+- Auth Actions (1): login/register redirect logic
+- Components: ThemeToggle imports fixed
+
+**Testing Results:**
+- ✅ Student registration → `/student/dashboard`
+- ✅ Student login → `/student/dashboard`
+- ✅ Browse quizzes navigation works
+- ✅ View quiz details works
+- ✅ Start quiz creates attempt
+- ✅ Logout redirects to login
+- ✅ Theme toggle works
+- ✅ No more 403/404 errors
+- ✅ All pages render correctly
+
+**Status:** Phase 2A is now **production-ready** for student quiz discovery and starting.
+
+---
+
+#### 🔄 Phase 2B: Quiz Taking Interface (NEXT - 0% Complete)
+
+**Estimated Duration:** 2 days
+**Status:** Ready to start
+**Goal:** Implement the actual quiz taking experience
+
+**UI Guidelines:** Continue student theme (emerald/cyan):
+- Full-screen quiz interface
+- Beautiful timer display
+- Smooth question transitions
+- Progress indicator
+- Theme support maintained
 
 **Backend:**
-- [ ] Quiz discovery service methods
-- [ ] Quiz attempt service creation
-- [ ] Server actions for quiz starting
+- [ ] Answer service methods:
+  - `saveAnswer()` - Save/update single answer
+  - `getAnswersByAttempt()` - Get all answers for attempt
+  - `getAnswer()` - Get specific answer
+  - `deleteAnswer()` - Remove answer (if needed)
+- [ ] API routes:
+  - POST `/api/attempts/[id]/answers` - Save answer
+  - GET `/api/attempts/[id]/answers` - Get saved answers
+  - POST `/api/attempts/[id]/submit` - Submit quiz
+- [ ] Grading logic:
+  - Auto-grade multiple choice and true/false
+  - Calculate total score
+  - Update attempt status
 
 **Frontend:**
-- [ ] Student dashboard page
-  - [ ] **Apply Phase 1A UI theme (with student-specific colors)**
-  - [ ] **Theme toggle and consistent header**
-- [ ] Quiz list for students
-  - [ ] **Enhanced cards with gradients**
-- [ ] Quiz detail page with start button
-  - [ ] **Modern UI with theme support**
+- [ ] Quiz taking page (`/student/quizzes/[id]/attempt/[attemptId]`)
+  - [ ] **Full-screen interface with student theme**
+  - [ ] **Timer component with countdown**
+  - [ ] Question display with proper formatting
+  - [ ] Answer input components
+  - [ ] Navigation controls (Next/Previous)
+  - [ ] Progress tracker bar
+  - [ ] Submit confirmation dialog
+- [ ] Components:
+  - [ ] `QuizTimer` - Countdown timer
+  - [ ] `QuestionDisplay` - Show question text and metadata
+  - [ ] `MultipleChoiceAnswer` - MC answer input
+  - [ ] `TrueFalseAnswer` - T/F answer input
+  - [ ] `ShortAnswerInput` - Text answer input
+  - [ ] `ProgressBar` - Visual progress indicator
+  - [ ] `QuizNavigation` - Next/Previous buttons
+  - [ ] `SubmitQuizDialog` - Confirmation before submit
 
-#### Phase 2B: Quiz Taking Interface (2 days)
+**Testing:**
+- [ ] Unit tests for answer service methods
+- [ ] Test auto-save functionality
+- [ ] Test timer behavior
+- [ ] Test grading logic
+
+---
+
+#### Phase 2C: Quiz Results & Review (1 day)
 
 **Database Verification Checklist:**
 - [ ] Verify `student_answers` table structure

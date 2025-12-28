@@ -15,7 +15,7 @@ import {
   ArrowLeft
 } from "lucide-react";
 
-export default async function EditQuizPage({ params }: { params: { id: string } }) {
+export default async function EditQuizPage({ params }: { params: Promise<{ id: string }> }) {
   const currentUser = await getCurrentUser();
   
   if (!currentUser) {
@@ -28,7 +28,8 @@ export default async function EditQuizPage({ params }: { params: { id: string } 
     redirect("/dashboard");
   }
 
-  const quiz = await getQuizById(params.id);
+  const { id } = await params;
+  const quiz = await getQuizById(id);
   
   if (!quiz) {
     redirect("/dashboard/quizzes");

@@ -76,7 +76,10 @@ export async function registerAction(formData: RegisterFormData): Promise<Action
     // Set auth cookie
     await setAuthCookie(token);
     
-    return { success: true, redirectTo: "/dashboard" };
+    // Redirect based on user type
+    const redirectTo = user.user_type === "student" ? "/student/dashboard" : "/dashboard";
+    
+    return { success: true, redirectTo };
   } catch (error) {
     console.error("Registration error:", error);
     return {
@@ -116,7 +119,10 @@ export async function loginAction(formData: LoginFormData): Promise<ActionResult
     // Set auth cookie
     await setAuthCookie(token);
     
-    return { success: true, redirectTo: "/dashboard" };
+    // Redirect based on user type
+    const redirectTo = user.user_type === "student" ? "/student/dashboard" : "/dashboard";
+    
+    return { success: true, redirectTo };
   } catch (error) {
     console.error("Login error:", error);
     return {

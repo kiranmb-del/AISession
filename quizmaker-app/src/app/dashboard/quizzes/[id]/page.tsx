@@ -17,7 +17,7 @@ import {
   ClipboardList
 } from "lucide-react";
 
-export default async function QuizDetailPage({ params }: { params: { id: string } }) {
+export default async function QuizDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const currentUser = await getCurrentUser();
   
   if (!currentUser) {
@@ -30,7 +30,8 @@ export default async function QuizDetailPage({ params }: { params: { id: string 
     redirect("/dashboard");
   }
 
-  const quiz = await getQuizWithInstructor(params.id);
+  const { id } = await params;
+  const quiz = await getQuizWithInstructor(id);
   
   if (!quiz) {
     redirect("/dashboard/quizzes");
@@ -41,7 +42,7 @@ export default async function QuizDetailPage({ params }: { params: { id: string 
     redirect("/dashboard/quizzes");
   }
 
-  const questionCount = await getQuizQuestionCount(params.id);
+  const questionCount = await getQuizQuestionCount(id);
   const stats = await getQuizStats(params.id);
 
   return (

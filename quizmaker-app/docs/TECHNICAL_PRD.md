@@ -2,9 +2,9 @@
 # QuizMaker Application
 
 ## Document Information
-- **Version:** 1.0
-- **Last Updated:** December 18, 2025
-- **Status:** Active Development
+- **Version:** 1.1
+- **Last Updated:** December 28, 2025
+- **Status:** Active Development - Phase 2B
 
 ---
 
@@ -668,12 +668,15 @@ npm run preview
 
 ### MVP Launch Criteria
 - ✅ User registration and login working
-- ✅ Students can view and take quizzes
 - ✅ Instructors can create and manage quizzes
-- ✅ Quiz results are calculated and stored
-- ✅ Dashboard shows relevant data for each role
-- ✅ Application deployed to Cloudflare Workers
-- ✅ No critical security vulnerabilities
+- ✅ Instructors can add and manage questions (all types)
+- ✅ Students can view published quizzes
+- ✅ Students can start quiz attempts
+- 🔄 Students can take quizzes (In Progress)
+- ⏳ Quiz results are calculated and stored
+- ✅ Dashboard shows relevant data for each role (basic implementation)
+- ⏳ Application deployed to Cloudflare Workers
+- ✅ No critical security vulnerabilities (ongoing)
 
 ### Post-MVP Success Metrics
 - 100+ registered users in first month
@@ -704,161 +707,243 @@ npm run preview
 ---
 
 ### Phase 1: Quiz Management (Instructor Features)
-**Status:** 🔄 In Progress
-**Estimated Duration:** 4-5 days
-**Goal:** Enable instructors to create, edit, and manage quizzes
+**Status:** ✅ COMPLETED
+**Actual Duration:** 3 days (Phase 1A: 2 days, Phase 1B: 1 day)
+**Completion Date:** December 27, 2025
+**Git Tags:** `phase-1a-complete`, `phase-1b-complete`
+**Goal:** Enable instructors to create, edit, and manage quizzes with questions
 
 #### Phase 1A: Quiz Creation
-**Estimated Duration:** 2 days
+**Status:** ✅ COMPLETED
+**Completion Date:** December 26, 2025
+**Actual Duration:** 2 days
 
 **Backend Tasks:**
-- [ ] Create quiz service (`lib/services/quiz.service.ts`)
-  - [ ] `createQuiz(instructorId, quizData)` - Create new quiz
-  - [ ] `getQuizById(quizId, userId?)` - Retrieve quiz details
-  - [ ] `getQuizzesByInstructor(instructorId)` - List instructor's quizzes
-  - [ ] `updateQuiz(quizId, instructorId, quizData)` - Update quiz details
-  - [ ] `deleteQuiz(quizId, instructorId)` - Soft/hard delete quiz
-  - [ ] `publishQuiz(quizId, instructorId)` - Make quiz available to students
-  - [ ] `unpublishQuiz(quizId, instructorId)` - Hide quiz from students
+- ✅ Create quiz service (`lib/services/quiz-service.ts`)
+  - ✅ `createQuiz(instructorId, quizData)` - Create new quiz
+  - ✅ `getQuizById(quizId, userId?)` - Retrieve quiz details
+  - ✅ `getQuizzesByInstructor(instructorId)` - List instructor's quizzes
+  - ✅ `updateQuiz(quizId, instructorId, quizData)` - Update quiz details
+  - ✅ `deleteQuiz(quizId, instructorId)` - Soft/hard delete quiz
+  - ✅ `publishQuiz(quizId, instructorId)` - Make quiz available to students
+  - ✅ `unpublishQuiz(quizId, instructorId)` - Hide quiz from students
+  - ✅ `getPublishedQuizzes()` - Get all published quizzes
+  - ✅ `getQuizWithInstructor()` - Get quiz with instructor info
+  - ✅ `getQuizStats()` - Get quiz statistics
+  - ✅ `getQuizQuestionCount()` - Count questions in quiz
 
-- [ ] Create question service (`lib/services/question.service.ts`)
-  - [ ] `createQuestion(quizId, questionData)` - Add question to quiz
-  - [ ] `getQuestionsByQuiz(quizId)` - Retrieve all questions for a quiz
-  - [ ] `updateQuestion(questionId, questionData)` - Update question
-  - [ ] `deleteQuestion(questionId)` - Remove question from quiz
-  - [ ] `reorderQuestions(quizId, questionIds)` - Update question order
-  - [ ] `createAnswerOption(questionId, optionData)` - Add answer option
-  - [ ] `updateAnswerOption(optionId, optionData)` - Update answer option
-  - [ ] `deleteAnswerOption(optionId)` - Remove answer option
-
-- [ ] Create Server Actions (`app/actions/quiz.ts`)
-  - [ ] `createQuizAction(formData)` - Quiz creation action
-  - [ ] `updateQuizAction(quizId, formData)` - Quiz update action
-  - [ ] `deleteQuizAction(quizId)` - Quiz deletion action
-  - [ ] `publishQuizAction(quizId)` - Publish quiz action
-  - [ ] `getInstructorQuizzesAction()` - Get instructor's quizzes
+- ✅ Create API Routes (`app/api/quizzes/`)
+  - ✅ GET/POST `app/api/quizzes/route.ts` - List and create quizzes
+  - ✅ GET/PUT/DELETE `app/api/quizzes/[id]/route.ts` - Quiz operations
+  - ✅ POST `app/api/quizzes/[id]/[action]/route.ts` - Publish/unpublish
 
 **Frontend Tasks:**
-- [ ] Create instructor dashboard page (`app/instructor/page.tsx`)
-  - [ ] Welcome section with instructor name
-  - [ ] Quick stats (total quizzes, published, drafts)
-  - [ ] Quiz list with status badges
-  - [ ] Create quiz button
+- ✅ Create instructor dashboard page (`app/dashboard/quizzes/page.tsx`)
+  - ✅ Welcome section with instructor name
+  - ✅ Quick stats (total quizzes, published, drafts)
+  - ✅ Quiz list with status badges
+  - ✅ Create quiz button
+  - ✅ Search, filter, and sort functionality
+  - ✅ Enhanced UI with theme toggle (light/dark mode)
+  - ✅ Gradient backgrounds and modern styling
 
-- [ ] Create quiz creation page (`app/instructor/quiz/new/page.tsx`)
-  - [ ] Quiz details form (title, description, duration, passing score)
-  - [ ] Form validation with Zod
-  - [ ] Save as draft functionality
-  - [ ] Navigation to add questions
+- ✅ Create quiz creation page (`app/dashboard/quizzes/new/page.tsx`)
+  - ✅ Quiz details form (title, description, duration, passing score)
+  - ✅ Form validation with Zod
+  - ✅ Save as draft functionality
+  - ✅ Enhanced UI with gradients and animations
 
-- [ ] Create quiz list component (`components/instructor/quiz-list.tsx`)
-  - [ ] Display quizzes in table/card view
-  - [ ] Status indicators (draft, published)
-  - [ ] Quick actions (edit, delete, publish/unpublish)
-  - [ ] Empty state for no quizzes
+- ✅ Create quiz list component (`components/quiz/quiz-list.tsx`)
+  - ✅ Display quizzes in table view
+  - ✅ Status indicators (draft, published)
+  - ✅ Quick actions (edit, delete, publish/unpublish)
+  - ✅ Empty state for no quizzes
+  - ✅ Confirm dialog for destructive actions
+
+- ✅ Create quiz detail page (`app/dashboard/quizzes/[id]/page.tsx`)
+  - ✅ Quiz metadata display with stats
+  - ✅ Edit and delete actions
+  - ✅ Manage questions button
+
+- ✅ Create quiz edit page (`app/dashboard/quizzes/[id]/edit/page.tsx`)
+  - ✅ Pre-populated form fields
+  - ✅ Update validation
 
 **Validation & Schema:**
-- [ ] Quiz validation schema (`lib/schemas/quiz.schema.ts`)
-- [ ] Question validation schema (`lib/schemas/question.schema.ts`)
+- ✅ Quiz validation schema (`lib/schemas/quiz-schema.ts`)
+- ✅ Question validation schema (created in Phase 1B)
+
+**Testing:**
+- ✅ 12 comprehensive unit tests for quiz service (100% passing)
+- ✅ Manual testing of all UI flows
 
 ---
 
 #### Phase 1B: Question Management
-**Estimated Duration:** 2-3 days
+**Status:** ✅ COMPLETED
+**Completion Date:** December 27, 2025
+**Actual Duration:** 1 day
 
 **Frontend Tasks:**
-- [ ] Create question builder page (`app/instructor/quiz/[id]/questions/page.tsx`)
-  - [ ] Question list view with reordering
-  - [ ] Add question button
-  - [ ] Question type selector (multiple choice, true/false, short answer)
-  - [ ] Question form with real-time preview
+- ✅ Create question builder page (`app/dashboard/quizzes/[id]/questions/page.tsx`)
+  - ✅ Question list view with drag-and-drop reordering
+  - ✅ Add question button with type selector
+  - ✅ Question type selector (multiple choice, true/false, short answer)
+  - ✅ Inline question editing without page reload
+  - ✅ Empty state for no questions
+  - ✅ Enhanced UI with Phase 1A theme
 
-- [ ] Create question editor component (`components/instructor/question-editor.tsx`)
-  - [ ] Question text input
-  - [ ] Points allocation
-  - [ ] Answer options management
-  - [ ] Mark correct answer
-  - [ ] Add/remove answer options
+- ✅ Create question editor component (`components/question/question-editor.tsx`)
+  - ✅ Question text input with character counter
+  - ✅ Points allocation (1-100)
+  - ✅ Answer options management
+  - ✅ Mark correct answer
+  - ✅ Add/remove answer options
+  - ✅ Real-time validation
 
-- [ ] Create question type components
-  - [ ] Multiple choice editor (`components/instructor/multiple-choice-editor.tsx`)
-  - [ ] True/False editor (`components/instructor/true-false-editor.tsx`)
-  - [ ] Short answer editor (`components/instructor/short-answer-editor.tsx`)
+- ✅ Create question type components
+  - ✅ Multiple choice editor (`components/question/multiple-choice-editor.tsx`)
+    - ✅ 2-10 answer options
+    - ✅ Radio selection for correct answer
+    - ✅ Add/remove options dynamically
+  - ✅ True/False editor (`components/question/true-false-editor.tsx`)
+    - ✅ Interactive card buttons
+    - ✅ Visual feedback for selection
+  - ✅ Short answer editor (`components/question/short-answer-editor.tsx`)
+    - ✅ Sample answer input (optional, 2000 char limit)
+    - ✅ Grading guidelines (optional, 1000 char limit)
+    - ✅ Character counters
 
-- [ ] Create quiz preview component (`components/instructor/quiz-preview.tsx`)
-  - [ ] Preview quiz as students would see it
-  - [ ] Navigate through questions
-  - [ ] View without submitting
+- ✅ Create quiz preview component (`components/question/quiz-preview.tsx`)
+  - ✅ Full-screen modal preview
+  - ✅ Navigate through questions (Next/Previous)
+  - ✅ Student view simulation
+  - ✅ Show/hide answers toggle (instructor only)
+  - ✅ Beautiful preview cards with theme support
 
 **Backend Tasks:**
-- [ ] Server Actions for questions (`app/actions/question.ts`)
-  - [ ] `createQuestionAction(quizId, questionData)`
-  - [ ] `updateQuestionAction(questionId, questionData)`
-  - [ ] `deleteQuestionAction(questionId)`
-  - [ ] `reorderQuestionsAction(quizId, questionIds)`
+- ✅ API Routes for questions (REST pattern)
+  - ✅ GET/POST `app/api/quizzes/[id]/questions/route.ts`
+  - ✅ GET/PUT/DELETE `app/api/quizzes/[id]/questions/[questionId]/route.ts`
+  - ✅ POST `app/api/quizzes/[id]/questions/reorder/route.ts`
+
+- ✅ Service methods in `lib/services/quiz-service.ts`
+  - ✅ `createQuestion()` - Add question with options
+  - ✅ `getQuestionById()` - Get single question
+  - ✅ `getQuestionWithOptions()` - Get with options
+  - ✅ `getQuestionsByQuiz()` - Get all for quiz
+  - ✅ `updateQuestion()` - Update question
+  - ✅ `deleteQuestion()` - Remove question
+  - ✅ `reorderQuestions()` - Change order
 
 **Testing:**
-- [ ] Unit tests for quiz service
-- [ ] Unit tests for question service
-- [ ] Integration tests for quiz creation flow
+- ✅ 18 comprehensive unit tests for question service (100% passing)
+- ✅ Full service method coverage
+- ✅ Mock configuration for testing environment
+- ✅ Manual testing of all UI flows
 
 ---
 
 ### Phase 2: Quiz Taking (Student Features)
-**Status:** ⏳ Pending
-**Estimated Duration:** 3-4 days
+**Status:** 🔄 IN PROGRESS (Phase 2A Complete, Phase 2B Next)
+**Actual Duration:** Phase 2A: 1 session
+**Estimated Remaining:** 3 days (Phase 2B: 2 days, Phase 2C: 1 day)
 **Goal:** Enable students to browse, take, and complete quizzes
 
 #### Phase 2A: Quiz Discovery & Start
-**Estimated Duration:** 1 day
+**Status:** ✅ COMPLETED
+**Completion Date:** December 28, 2025
+**Actual Duration:** 1 session
+**Git Tag:** `phase-2a-complete`
 
 **Backend Tasks:**
-- [ ] Create quiz discovery service methods
-  - [ ] `getPublishedQuizzes()` - Get all published quizzes
-  - [ ] `getQuizWithQuestions(quizId)` - Get full quiz data for taking
-  - [ ] `getQuizPreview(quizId)` - Get quiz metadata without answers
+- ✅ Create quiz discovery service methods
+  - ✅ `getPublishedQuizzes()` - Get all published quizzes (implemented in Phase 1A)
+  - ✅ Quiz metadata retrieval with question counts
 
-- [ ] Create quiz attempt service (`lib/services/quiz-attempt.service.ts`)
-  - [ ] `startQuizAttempt(studentId, quizId)` - Create new attempt
-  - [ ] `getAttemptById(attemptId)` - Retrieve attempt details
-  - [ ] `getStudentAttempts(studentId)` - Get student's attempt history
-  - [ ] `getAttemptsByQuiz(quizId)` - Get all attempts for a quiz (instructor)
+- ✅ Create quiz attempt service (`lib/services/quiz-attempt-service.ts`) - 9 methods
+  - ✅ `createQuizAttempt(studentId, quizId)` - Create new attempt with duplicate prevention
+  - ✅ `getAttemptById(attemptId)` - Retrieve single attempt
+  - ✅ `getAttemptWithDetails(attemptId)` - Get attempt with quiz/instructor info
+  - ✅ `getAttemptsByStudent(studentId)` - Get all attempts for a student
+  - ✅ `getActiveAttempt(quizId, studentId)` - Check for in-progress attempts
+  - ✅ `getAttemptsByQuiz(quizId, studentId)` - Get student's attempts for specific quiz
+  - ✅ `completeAttempt(attemptId, score, totalPoints)` - Mark attempt as completed
+  - ✅ `abandonAttempt(attemptId)` - Mark attempt as abandoned
+  - ✅ `getStudentStats(studentId)` - Calculate student statistics
+
+- ✅ Create Student API Routes (3 endpoints)
+  - ✅ GET `app/api/student/quizzes/route.ts` - List published quizzes
+  - ✅ GET `app/api/student/quizzes/[id]/route.ts` - Quiz detail with attempt status
+  - ✅ POST `app/api/student/quizzes/[id]/start/route.ts` - Start new attempt
 
 **Frontend Tasks:**
-- [ ] Create student dashboard page (`app/student/page.tsx`)
-  - [ ] Welcome section with student name
-  - [ ] Available quizzes list
-  - [ ] Recent attempts with scores
-  - [ ] Quick stats (quizzes taken, average score)
+- ✅ Create student dashboard page (`app/student/dashboard/page.tsx`)
+  - ✅ Welcome section with student name
+  - ✅ Animated stat cards (quizzes taken, completed, avg score)
+  - ✅ Recent activity section with last 5 attempts
+  - ✅ Quick action buttons (Browse Quizzes, View All Attempts)
+  - ✅ Continue/View Results buttons for attempts
+  - ✅ Empty state for new students
+  - ✅ Emerald/cyan gradient theme (student-specific)
 
-- [ ] Create quiz list component (`components/student/quiz-list.tsx`)
-  - [ ] Display published quizzes
-  - [ ] Quiz metadata (title, description, duration, passing score)
-  - [ ] Start quiz button
-  - [ ] Number of questions indicator
+- ✅ Create quiz browsing page (`app/student/quizzes/page.tsx`)
+  - ✅ Grid layout of quiz cards (3 columns)
+  - ✅ Stats banner showing available quizzes
+  - ✅ Empty state when no quizzes published
 
-- [ ] Create quiz detail page (`app/student/quiz/[id]/page.tsx`)
-  - [ ] Quiz information display
-  - [ ] Start quiz button
-  - [ ] Previous attempts section
-  - [ ] Time limit warning if applicable
+- ✅ Create quiz card component (`components/student/quiz-card.tsx`)
+  - ✅ Display quiz metadata (title, description, duration, passing score)
+  - ✅ Start quiz button with hover effects
+  - ✅ Number of questions indicator
+  - ✅ Beautiful card design with gradients
 
-**Server Actions:**
-- [ ] `getPublishedQuizzesAction()` - Get available quizzes
-- [ ] `startQuizAttemptAction(quizId)` - Start new attempt
+- ✅ Create quiz detail page (`app/student/quizzes/[id]/page.tsx`)
+  - ✅ Two-column layout with quiz information
+  - ✅ Active attempt alert (if exists)
+  - ✅ Previous attempts history with scores
+  - ✅ Tips for success card
+  - ✅ Start/Continue quiz buttons
+  - ✅ Time limit warning if applicable
+
+- ✅ Create start quiz button component (`components/student/start-quiz-button.tsx`)
+  - ✅ Client component with loading state
+  - ✅ API integration for starting attempts
+  - ✅ Error handling and notifications
+
+**Bug Fixes (Phase 2A+):**
+- ✅ Fixed authentication property mismatch (`user.role` → `user.userType`)
+- ✅ Fixed ThemeToggle import error (default → named import)
+- ✅ Fixed logout functionality (use `logoutAction` instead of API route)
+- ✅ Fixed login redirect (students → `/student/dashboard`, instructors → `/dashboard`)
+- ✅ Fixed user data fetching (use `getUserById()` for full details)
+
+**Testing:**
+- ✅ 18 comprehensive unit tests (100% passing)
+- ✅ All service methods covered
+- ✅ Success and error scenarios tested
+- ✅ Manual testing of complete student flow
+
+**Placeholder Pages Created (for Phase 2B/2C):**
+- ✅ `app/student/quizzes/[id]/attempt/[attemptId]/page.tsx` - Quiz taking
+- ✅ `app/student/attempts/page.tsx` - Attempts history
+- ✅ `app/student/attempts/[id]/results/page.tsx` - Results page
 
 ---
 
 #### Phase 2B: Quiz Taking Interface
+**Status:** 🔄 NEXT - Ready to Start
 **Estimated Duration:** 2 days
 
 **Frontend Tasks:**
-- [ ] Create quiz taking page (`app/student/quiz/[id]/take/page.tsx`)
+- [ ] Implement quiz taking page (`app/student/quizzes/[id]/attempt/[attemptId]/page.tsx`)
+  - [ ] Full-screen interface with student theme (emerald/cyan)
   - [ ] Question navigation (previous/next)
-  - [ ] Progress indicator
-  - [ ] Timer display (if quiz has time limit)
+  - [ ] Progress indicator bar
+  - [ ] Timer display with countdown (if quiz has time limit)
   - [ ] Auto-save functionality
   - [ ] Submit quiz confirmation dialog
+  - [ ] Smooth question transitions
 
 - [ ] Create question display components
   - [ ] Multiple choice question (`components/student/multiple-choice-question.tsx`)
@@ -871,97 +956,133 @@ npm run preview
   - [ ] Jump to question functionality
   - [ ] Submit button
 
-**Backend Tasks:**
-- [ ] Update quiz attempt service
-  - [ ] `saveAnswer(attemptId, questionId, answer)` - Save single answer
-  - [ ] `saveAnswers(attemptId, answers)` - Batch save answers
-  - [ ] `submitQuizAttempt(attemptId)` - Complete and grade attempt
+- [ ] Create supporting components
+  - [ ] `QuizTimer` - Countdown timer with animations
+  - [ ] `ProgressBar` - Visual progress indicator
+  - [ ] `SubmitQuizDialog` - Confirmation dialog
 
-**Server Actions:**
-- [ ] `saveAnswerAction(attemptId, questionId, answer)` - Save answer
-- [ ] `submitQuizAction(attemptId, answers)` - Submit quiz
+**Backend Tasks:**
+- [ ] Create answer service (`lib/services/answer-service.ts`)
+  - [ ] `saveAnswer(attemptId, questionId, answer)` - Save single answer
+  - [ ] `getAnswersByAttempt(attemptId)` - Get all answers for attempt
+  - [ ] `getAnswer(attemptId, questionId)` - Get specific answer
+  - [ ] `deleteAnswer(answerId)` - Remove answer (if needed)
+
+- [ ] Create API Routes
+  - [ ] POST `app/api/attempts/[id]/answers/route.ts` - Save answer
+  - [ ] GET `app/api/attempts/[id]/answers/route.ts` - Get saved answers
+  - [ ] POST `app/api/attempts/[id]/submit/route.ts` - Submit quiz
+
+- [ ] Implement grading logic
+  - [ ] Auto-grade multiple choice questions
+  - [ ] Auto-grade true/false questions
+  - [ ] Calculate total score
+  - [ ] Update attempt status to completed
+
+**Testing:**
+- [ ] Unit tests for answer service methods
+- [ ] Test auto-save functionality
+- [ ] Test timer behavior
+- [ ] Test grading logic
+- [ ] Manual testing of quiz taking flow
 
 ---
 
 #### Phase 2C: Quiz Results & Review
+**Status:** ⏳ PENDING
 **Estimated Duration:** 1 day
 
 **Backend Tasks:**
-- [ ] Create grading service (`lib/services/grading.service.ts`)
+- [ ] Create grading service (`lib/services/grading-service.ts`)
   - [ ] `gradeMultipleChoice(answer, correctOptionId)` - Grade MC question
   - [ ] `gradeTrueFalse(answer, correctAnswer)` - Grade T/F question
   - [ ] `calculateQuizScore(attemptId)` - Calculate total score
   - [ ] `getAttemptResults(attemptId)` - Get detailed results
 
 **Frontend Tasks:**
-- [ ] Create results page (`app/student/quiz/[id]/results/[attemptId]/page.tsx`)
+- [ ] Implement results page (`app/student/attempts/[id]/results/page.tsx`)
+  - [ ] Celebratory UI with gradient cards
+  - [ ] Animated score reveal
   - [ ] Score display (points earned / total points)
   - [ ] Pass/fail indicator
   - [ ] Percentage score
   - [ ] Time taken display
   - [ ] Review answers button
+  - [ ] Theme support
 
-- [ ] Create quiz review page (`app/student/quiz/[id]/review/[attemptId]/page.tsx`)
+- [ ] Create quiz review page (`app/student/attempts/[id]/review/page.tsx`)
   - [ ] Display all questions with student's answers
   - [ ] Show correct answers
-  - [ ] Indicate correct/incorrect
+  - [ ] Color-coded correct/incorrect indicators
+  - [ ] Smooth transitions
   - [ ] Explanation section (future)
+
+- [ ] Implement attempts history page (`app/student/attempts/page.tsx`)
+  - [ ] Table of all attempts with scores
+  - [ ] Filter by quiz
+  - [ ] Sort by date, score
+  - [ ] View results buttons
 
 - [ ] Create results summary component (`components/student/results-summary.tsx`)
   - [ ] Score breakdown by question
   - [ ] Visual indicators (checkmarks, X's)
   - [ ] Performance chart (future)
 
-**Server Actions:**
-- [ ] `getAttemptResultsAction(attemptId)` - Get results
-- [ ] `getAttemptReviewAction(attemptId)` - Get review data
+**API Routes:**
+- [ ] GET `app/api/attempts/[id]/results/route.ts` - Get results
+- [ ] GET `app/api/attempts/[id]/review/route.ts` - Get review data
 
 **Testing:**
-- [ ] Unit tests for quiz attempt service
 - [ ] Unit tests for grading service
 - [ ] Integration tests for quiz taking flow
 - [ ] Integration tests for grading logic
+- [ ] Manual testing of results display
 
 ---
 
 ### Phase 3: Dashboard & Analytics
-**Status:** ⏳ Pending
+**Status:** ⏳ PENDING
 **Estimated Duration:** 3 days
 **Goal:** Provide comprehensive dashboards with statistics and insights
 
 #### Phase 3A: Student Dashboard Enhancement
+**Status:** ⏳ PENDING
 **Estimated Duration:** 1 day
+**Note:** Basic student dashboard already implemented in Phase 2A with stats cards and recent attempts
 
 **Backend Tasks:**
-- [ ] Create analytics service (`lib/services/analytics.service.ts`)
-  - [ ] `getStudentStats(studentId)` - Get student statistics
-  - [ ] `getStudentAttemptHistory(studentId, limit)` - Get recent attempts
-  - [ ] `getStudentProgressOverTime(studentId)` - Get progress data
+- [ ] Extend analytics service (`lib/services/analytics-service.ts`)
+  - ✅ `getStudentStats(studentId)` - Get student statistics (completed in Phase 2A)
+  - [ ] `getStudentProgressOverTime(studentId)` - Get progress data for charts
   - [ ] `getStudentQuizPerformance(studentId, quizId)` - Get quiz-specific stats
+  - [ ] `getStudentAttemptHistory(studentId, limit)` - Enhanced history with filters
 
 **Frontend Tasks:**
-- [ ] Enhance student dashboard (`app/student/page.tsx`)
-  - [ ] Statistics cards (total quizzes, average score, pass rate)
-  - [ ] Recent attempts table with scores
+- [ ] Enhance student dashboard (`app/student/dashboard/page.tsx`)
+  - ✅ Statistics cards (completed in Phase 2A)
+  - ✅ Recent attempts with scores (completed in Phase 2A)
   - [ ] Performance chart (score trend over time)
+  - [ ] Progress visualization
   - [ ] Recommended quizzes (future)
 
 - [ ] Create statistics components
-  - [ ] Stat card component (`components/dashboard/stat-card.tsx`)
   - [ ] Progress chart component (`components/dashboard/progress-chart.tsx`)
-  - [ ] Attempt history table (`components/student/attempt-history-table.tsx`)
+  - [ ] Score trend chart (`components/student/score-trend-chart.tsx`)
+  - [ ] Enhanced attempt history table with filters
 
-**Server Actions:**
-- [ ] `getStudentStatsAction()` - Get student statistics
-- [ ] `getStudentHistoryAction(limit)` - Get attempt history
+**API Routes:**
+- [ ] GET `app/api/student/analytics/route.ts` - Get student analytics
+- [ ] GET `app/api/student/progress/route.ts` - Get progress data
 
 ---
 
 #### Phase 3B: Instructor Dashboard Enhancement
+**Status:** ⏳ PENDING
 **Estimated Duration:** 2 days
+**Note:** Basic instructor dashboard already exists with quiz management from Phase 1A
 
 **Backend Tasks:**
-- [ ] Extend analytics service for instructors
+- [ ] Create instructor analytics service
   - [ ] `getInstructorStats(instructorId)` - Get instructor statistics
   - [ ] `getQuizAnalytics(quizId)` - Get quiz-specific analytics
   - [ ] `getQuizAttemptSummary(quizId)` - Get attempt summary
@@ -969,32 +1090,36 @@ npm run preview
   - [ ] `getQuestionAnalytics(quizId)` - Get question difficulty stats
 
 **Frontend Tasks:**
-- [ ] Enhance instructor dashboard (`app/instructor/page.tsx`)
-  - [ ] Statistics cards (total quizzes, total students, average scores)
-  - [ ] Recent quiz activity
+- [ ] Enhance instructor dashboard (`app/dashboard/page.tsx`)
+  - ✅ Quiz list with search/filter/sort (completed in Phase 1A)
+  - [ ] Statistics cards (total students, average scores, completion rates)
+  - [ ] Recent quiz activity feed
   - [ ] Top performing quizzes
   - [ ] Student engagement metrics
 
-- [ ] Create quiz analytics page (`app/instructor/quiz/[id]/analytics/page.tsx`)
+- [ ] Create quiz analytics page (`app/dashboard/quizzes/[id]/analytics/page.tsx`)
   - [ ] Attempt summary (total attempts, completion rate)
   - [ ] Score distribution chart
   - [ ] Question difficulty analysis
   - [ ] Student performance table
   - [ ] Time spent analysis
+  - [ ] Apply Phase 1A UI theme
 
 - [ ] Create analytics components
   - [ ] Score distribution chart (`components/instructor/score-distribution-chart.tsx`)
   - [ ] Question performance table (`components/instructor/question-performance-table.tsx`)
   - [ ] Student performance table (`components/instructor/student-performance-table.tsx`)
+  - [ ] Theme-aware chart colors
 
-**Server Actions:**
-- [ ] `getInstructorStatsAction()` - Get instructor stats
-- [ ] `getQuizAnalyticsAction(quizId)` - Get quiz analytics
-- [ ] `getStudentPerformanceAction(quizId)` - Get student data
+**API Routes:**
+- [ ] GET `app/api/instructor/stats/route.ts` - Get instructor stats
+- [ ] GET `app/api/quizzes/[id]/analytics/route.ts` - Get quiz analytics
+- [ ] GET `app/api/quizzes/[id]/performance/route.ts` - Get student data
 
 **Testing:**
 - [ ] Unit tests for analytics service
 - [ ] Integration tests for dashboard data
+- [ ] Manual testing of analytics UI
 
 ---
 
@@ -1053,14 +1178,25 @@ npm run preview
 
 **Overall Progress:**
 - ✅ Phase 0: Foundation (100% complete)
-- 🔄 Phase 1: Quiz Management (0% complete)
-- ⏳ Phase 2: Quiz Taking (0% complete)
-- ⏳ Phase 3: Dashboard & Analytics (0% complete)
+- ✅ Phase 1A: Quiz Creation (100% complete - Dec 26, 2025)
+- ✅ Phase 1B: Question Management (100% complete - Dec 27, 2025)
+- ✅ Phase 2A: Quiz Discovery & Start (100% complete - Dec 28, 2025)
+- 🔄 Phase 2B: Quiz Taking Interface (0% complete - NEXT)
+- ⏳ Phase 2C: Quiz Results & Review (0% complete)
+- ⏳ Phase 3A: Student Dashboard Enhancement (0% complete)
+- ⏳ Phase 3B: Instructor Dashboard Enhancement (0% complete)
 - ⏳ Phase 4: Polish & Optimization (0% complete)
 
-**Current Focus:** Phase 1A - Quiz Creation (Backend)
+**Overall Completion:** 50% (4 of 8 phases complete)
 
-**Next Milestone:** Complete quiz service and question service implementation
+**Current Focus:** Phase 2B - Quiz Taking Interface (Ready to Start)
+
+**Next Milestone:** Complete quiz taking page with timer, navigation, and answer saving
+
+**Git Tags Created:**
+- `phase-1a-complete` - Quiz Management (Dec 26, 2025)
+- `phase-1b-complete` - Question Management (Dec 27, 2025)
+- `phase-2a-complete` - Quiz Discovery & Start (Dec 28, 2025)
 
 ---
 
@@ -1074,11 +1210,14 @@ npm run preview
 - **Week 3:** Phase 4 (Polish & Optimization) + Testing & Deployment
 
 ### Key Milestones
-- ✅ **Milestone 0:** Authentication Complete (Dec 26, 2025)
-- 🎯 **Milestone 1:** Instructors can create quizzes (Target: Dec 28, 2025)
-- 🎯 **Milestone 2:** Students can take quizzes (Target: Dec 30, 2025)
-- 🎯 **Milestone 3:** Dashboard analytics complete (Target: Jan 1, 2026)
-- 🎯 **Milestone 4:** MVP deployed to production (Target: Jan 3, 2026)
+- ✅ **Milestone 0:** Authentication Complete (Dec 2025)
+- ✅ **Milestone 1:** Instructors can create quizzes (Completed: Dec 26, 2025)
+- ✅ **Milestone 1B:** Instructors can manage questions (Completed: Dec 27, 2025)
+- ✅ **Milestone 2A:** Students can browse and start quizzes (Completed: Dec 28, 2025)
+- 🔄 **Milestone 2B:** Students can take quizzes (Target: Dec 30, 2025)
+- 🎯 **Milestone 2C:** Students can view results (Target: Dec 31, 2025)
+- 🎯 **Milestone 3:** Dashboard analytics complete (Target: Jan 2, 2026)
+- 🎯 **Milestone 4:** MVP deployed to production (Target: Jan 5, 2026)
 
 ---
 

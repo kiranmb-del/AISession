@@ -4,12 +4,12 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbopack",
-		"build": "next build",
+		"build": "cd quizmaker-app && opennextjs-cloudflare build",
 		"start": "next start",
 		"lint": "next lint",
-		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-		"upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
-		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+		"deploy": "cd quizmaker-app && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+		"upload": "cd quizmaker-app && opennextjs-cloudflare build && opennextjs-cloudflare upload",
+		"preview": "cd quizmaker-app && opennextjs-cloudflare build && opennextjs-cloudflare preview",
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
 	},
 	"dependencies": {

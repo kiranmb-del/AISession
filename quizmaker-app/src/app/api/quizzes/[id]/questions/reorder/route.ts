@@ -34,7 +34,7 @@ export async function POST(
     }
     
     // Parse and validate request body
-    const body = await request.json();
+    const body = await request.json() as Record<string, unknown>;
     const validatedData = reorderQuestionsSchema.parse({
       ...body,
       quizId,

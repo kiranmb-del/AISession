@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -49,7 +48,7 @@ export function QuizList() {
   const fetchQuizzes = async () => {
     try {
       const response = await fetch("/api/quizzes");
-      const data = await response.json();
+      const data = await response.json() as { quizzes: Quiz[]; error?: string };
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to fetch quizzes");
@@ -81,7 +80,7 @@ export function QuizList() {
           });
 
           if (!response.ok) {
-            const data = await response.json();
+            const data = await response.json() as { error?: string };
             throw new Error(data.error || "Failed to delete quiz");
           }
 
@@ -112,7 +111,7 @@ export function QuizList() {
             method: "POST",
           });
 
-          const data = await response.json();
+          const data = await response.json() as { error?: string };
 
           if (!response.ok) {
             throw new Error(data.error || `Failed to ${action} quiz`);
@@ -196,7 +195,7 @@ export function QuizList() {
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-12">
           <p className="text-center text-muted-foreground mb-4">
-            You haven't created any quizzes yet.
+            You haven&apos;t created any quizzes yet.
           </p>
           <Button onClick={() => router.push("/dashboard/quizzes/new")}>
             Create Your First Quiz

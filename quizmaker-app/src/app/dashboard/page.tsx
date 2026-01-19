@@ -27,9 +27,9 @@ interface QuizWithQuestionCount extends QuizWithInstructor {
 }
 
 interface StudentStats {
-  totalAttempts: number;
-  averageScore: number | null;
-  quizzesPassed: number;
+  total_attempts: number;
+  completed_attempts: number;
+  average_score_percentage: number | null;
 }
 
 /**
@@ -206,10 +206,10 @@ function StudentDashboard({ quizzes, attempts, stats }: StudentDashboardProps) {
                         <BookOpen className="h-3 w-3" />
                         <span>{quiz.question_count} questions</span>
                       </div>
-                      {quiz.time_limit_minutes && (
+                      {quiz.duration_minutes && (
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          <span>{quiz.time_limit_minutes} min</span>
+                          <span>{quiz.duration_minutes} min</span>
                         </div>
                       )}
                     </div>
@@ -288,19 +288,19 @@ function StudentDashboard({ quizzes, attempts, stats }: StudentDashboardProps) {
             <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <span className="text-sm text-gray-600 dark:text-gray-400">Quizzes Taken</span>
               <span className="font-bold text-xl text-gray-900 dark:text-white">
-                {stats?.totalAttempts || 0}
+                {stats?.total_attempts || 0}
               </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
               <span className="text-sm text-gray-600 dark:text-gray-400">Average Score</span>
               <span className="font-bold text-xl text-gray-900 dark:text-white">
-                {stats?.averageScore ? `${Math.round(stats.averageScore)}%` : '-'}
+                {stats?.average_score_percentage ? `${Math.round(stats.average_score_percentage)}%` : '-'}
               </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Quizzes Passed</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">Quizzes Completed</span>
               <span className="font-bold text-xl text-gray-900 dark:text-white">
-                {stats?.quizzesPassed || 0}
+                {stats?.completed_attempts || 0}
               </span>
             </div>
           </div>

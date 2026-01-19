@@ -11,7 +11,6 @@ import {
   BookOpen, 
   LogOut,
   Users,
-  ClipboardList,
   Plus,
   ArrowLeft
 } from "lucide-react";

@@ -18,8 +18,6 @@ import {
   GripVertical,
   Edit,
   Trash2,
-  Eye,
-  Save,
   ArrowLeft,
 } from "lucide-react";
 
@@ -66,6 +64,7 @@ export function QuizQuestionsClient({
 
   useEffect(() => {
     fetchQuestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizId]);
 
   const fetchQuestions = async () => {
@@ -77,7 +76,7 @@ export function QuizQuestionsClient({
         throw new Error("Failed to fetch questions");
       }
 
-      const data = await response.json();
+      const data = await response.json() as { questions: Question[] };
       setQuestions(data.questions || []);
     } catch (error) {
       console.error("Error fetching questions:", error);
@@ -87,6 +86,7 @@ export function QuizQuestionsClient({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSaveQuestion = async (questionData: any) => {
     try {
       const isUpdate = !!questionData.id;
@@ -103,7 +103,7 @@ export function QuizQuestionsClient({
       });
 
       if (!response.ok) {
-        const error = await response.json();
+        const error = await response.json() as { error: string };
         throw new Error(error.error || "Failed to save question");
       }
 
@@ -233,7 +233,7 @@ export function QuizQuestionsClient({
       if (metadata) {
         try {
           parsed = JSON.parse(metadata);
-        } catch (e) {
+        } catch {
           // Ignore parse errors
         }
       }

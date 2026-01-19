@@ -47,7 +47,7 @@ export default async function EditQuizPage({ params }: { params: Promise<{ id: s
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <Link href={`/dashboard/quizzes/${params.id}`}>
+              <Link href={`/dashboard/quizzes/${id}`}>
                 <Button variant="ghost" size="sm" className="gap-2">
                   <ArrowLeft className="h-4 w-4" />
                   Back to Quiz
@@ -92,7 +92,7 @@ export default async function EditQuizPage({ params }: { params: Promise<{ id: s
         </div>
 
         {/* Form */}
-        <EditQuizForm quizId={params.id} />
+        <EditQuizForm quizId={id} />
       </main>
     </div>
   );

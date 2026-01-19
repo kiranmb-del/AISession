@@ -45,7 +45,7 @@ export function CreateQuizForm({ onSuccess, onCancel }: CreateQuizFormProps) {
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json() as { quiz: { id: string }; error?: string };
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to create quiz");

@@ -43,7 +43,7 @@ export default async function QuizDetailPage({ params }: { params: Promise<{ id:
   }
 
   const questionCount = await getQuizQuestionCount(id);
-  const stats = await getQuizStats(params.id);
+  const stats = await getQuizStats(id);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -125,13 +125,13 @@ export default async function QuizDetailPage({ params }: { params: Promise<{ id:
               </div>
               
               <div className="flex flex-wrap gap-3">
-                <Link href={`/dashboard/quizzes/${params.id}/edit`}>
+                <Link href={`/dashboard/quizzes/${id}/edit`}>
                   <Button variant="default" className="gap-2">
                     <Edit className="h-4 w-4" />
                     Edit Quiz
                   </Button>
                 </Link>
-                <Link href={`/dashboard/quizzes/${params.id}/questions`}>
+                <Link href={`/dashboard/quizzes/${id}/questions`}>
                   <Button variant="outline" className="gap-2">
                     <ClipboardList className="h-4 w-4" />
                     Manage Questions
@@ -183,7 +183,7 @@ export default async function QuizDetailPage({ params }: { params: Promise<{ id:
                     <p className="text-sm font-medium text-amber-900 dark:text-amber-100 mb-2">
                       This quiz needs at least one question before it can be published.
                     </p>
-                    <Link href={`/dashboard/quizzes/${params.id}/questions`}>
+                    <Link href={`/dashboard/quizzes/${id}/questions`}>
                       <Button variant="outline" className="mt-2" size="sm">
                         Add Questions
                       </Button>

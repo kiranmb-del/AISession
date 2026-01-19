@@ -165,7 +165,7 @@ export function QuizPreview({
                 <>
                   {currentQuestion.answer_options
                     .sort((a, b) => a.order_index - b.order_index)
-                    .map((option, index) => (
+                    .map((option) => (
                       <Card
                         key={option.id}
                         className={`cursor-pointer transition-all hover:shadow-md ${
@@ -300,8 +300,8 @@ export function QuizPreview({
           {/* Student View Notice */}
           <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
             <p className="text-sm text-yellow-800 dark:text-yellow-300">
-              <strong>📝 Preview Mode:</strong> This is how students will see the quiz. The "Show
-              Answers" toggle is only visible to you as the instructor.
+              <strong>📝 Preview Mode:</strong> This is how students will see the quiz. The &quot;Show
+              Answers&quot; toggle is only visible to you as the instructor.
             </p>
           </div>
         </DialogContent>

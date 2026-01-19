@@ -10,7 +10,7 @@ import { getPublishedQuizzes } from "@/lib/services/quiz-service";
 import { getQuestionsByQuiz } from "@/lib/services/quiz-service";
 import { logoutAction } from "@/app/actions/auth";
 import Link from "next/link";
-import { ArrowLeft, BookOpen, LogOut, Search } from "lucide-react";
+import { ArrowLeft, BookOpen, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";

@@ -27,11 +27,11 @@ export default function StartQuizButton({ quizId }: StartQuizButtonProps) {
       });
 
       if (!response.ok) {
-        const error = await response.json();
+        const error = await response.json() as { error?: string };
         throw new Error(error.error || "Failed to start quiz");
       }
 
-      const attempt = await response.json();
+      const attempt = await response.json() as { id: string };
       toast.success("Quiz started! Good luck!");
       
       // Redirect to quiz taking page

@@ -58,7 +58,7 @@ describe("Question Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValue({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await createQuestion({
@@ -105,7 +105,7 @@ describe("Question Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValue({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await createQuestion({
@@ -148,7 +148,7 @@ describe("Question Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValue({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await createQuestion({
@@ -205,7 +205,7 @@ describe("Question Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValue({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       await createQuestion({
@@ -418,7 +418,7 @@ describe("Question Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValue({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await updateQuestion("question-123", "instructor-123", {
@@ -458,7 +458,7 @@ describe("Question Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValue({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       await updateQuestion("question-123", "instructor-123", {
@@ -524,7 +524,7 @@ describe("Question Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValue({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       await deleteQuestion("question-123", "instructor-123");
@@ -562,7 +562,7 @@ describe("Question Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValue({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       await reorderQuestions("quiz-123", "instructor-123", [

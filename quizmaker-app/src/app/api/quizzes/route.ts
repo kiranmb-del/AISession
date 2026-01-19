@@ -6,17 +6,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   createQuiz,
-  getQuizById,
   getQuizzesByInstructor,
   getPublishedQuizzes,
   updateQuiz,
   deleteQuiz,
-  publishQuiz,
-  unpublishQuiz,
-  getQuizWithInstructor,
   canPublishQuiz,
-  getQuizStats,
-  getQuizQuestionCount,
 } from "@/lib/services/quiz-service";
 import { getUserFromToken } from "@/lib/auth";
 import { createQuizSchema, updateQuizSchema } from "@/lib/schemas/quiz-schema";
@@ -89,7 +83,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
+    const body = await request.json() as Record<string, unknown>;
     
     // Validate input with Zod schema
     const validation = createQuizSchema.safeParse(body);
@@ -106,13 +100,13 @@ export async function POST(request: NextRequest) {
 
     const { title, description, durationMinutes, passingScore } = validation.data;
 
-    // Create the quiz
+    // Create the quiz (convert null to undefined for optional fields)
     const quiz = await createQuiz({
       title,
-      description,
+      description: description ?? undefined,
       instructorId: user.id,
-      durationMinutes,
-      passingScore,
+      durationMinutes: durationMinutes ?? undefined,
+      passingScore: passingScore ?? undefined,
     });
 
     return NextResponse.json({ quiz }, { status: 201 });
@@ -144,7 +138,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
+    const body = await request.json() as Record<string, unknown>;
     
     // Validate input with Zod schema
     const validation = updateQuizSchema.safeParse(body);
@@ -172,12 +166,12 @@ export async function PUT(request: NextRequest) {
       }
     }
 
-    // Update the quiz
+    // Update the quiz (convert null to undefined for optional fields)
     const quiz = await updateQuiz(quizId, user.id, {
       title,
-      description,
-      durationMinutes,
-      passingScore,
+      description: description ?? undefined,
+      durationMinutes: durationMinutes ?? undefined,
+      passingScore: passingScore ?? undefined,
       isPublished,
     });
 

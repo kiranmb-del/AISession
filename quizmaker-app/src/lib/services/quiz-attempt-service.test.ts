@@ -52,7 +52,7 @@ describe("Quiz Attempt Service", () => {
       // Mock successful insert
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       // Mock fetching the created attempt
@@ -92,7 +92,7 @@ describe("Quiz Attempt Service", () => {
       // Mock successful insert
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       // Mock failed fetch (attempt not found after creation)
@@ -269,7 +269,7 @@ describe("Quiz Attempt Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await completeAttempt("attempt-123", 80, 100);
@@ -321,7 +321,7 @@ describe("Quiz Attempt Service", () => {
 
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await abandonAttempt("attempt-123");

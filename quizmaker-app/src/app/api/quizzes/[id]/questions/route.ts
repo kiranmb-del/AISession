@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { getQuestionsByQuiz, createQuestion } from "@/lib/services/quiz-service";
+import { getQuestionsByQuiz, createQuestion, CreateQuestionInput } from "@/lib/services/quiz-service";
 import { getUserFromToken } from "@/lib/auth";
 import { createAnyQuestionSchema } from "@/lib/schemas/question.schema";
 import { z } from "zod";
@@ -64,7 +64,7 @@ export async function POST(
     }
     
     // Parse and validate request body
-    const body = await request.json();
+    const body = await request.json() as Record<string, unknown>;
     
     // Validate based on question type
     const validatedData = createAnyQuestionSchema.parse({
@@ -73,7 +73,7 @@ export async function POST(
     });
     
     // Create question with appropriate data structure
-    let createData: any = {
+    const createData: CreateQuestionInput = {
       quizId,
       questionText: validatedData.questionText,
       questionType: validatedData.questionType,
@@ -86,8 +86,9 @@ export async function POST(
     } else if (validatedData.questionType === "true_false") {
       createData.correctAnswer = validatedData.correctAnswer;
     } else if (validatedData.questionType === "short_answer") {
-      createData.sampleAnswer = validatedData.sampleAnswer;
-      createData.answerGuidelines = validatedData.answerGuidelines;
+      // Convert null to undefined for compatibility with service layer
+      createData.sampleAnswer = validatedData.sampleAnswer ?? undefined;
+      createData.answerGuidelines = validatedData.answerGuidelines ?? undefined;
     }
     
     const question = await createQuestion(createData);

@@ -75,7 +75,15 @@ export async function PUT(
     });
     
     // Extract update data (excluding questionId)
-    const { questionId: _, ...updateData } = validatedData;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { questionId: _, ...rawUpdateData } = validatedData;
+    
+    // Convert null values to undefined for compatibility with service layer
+    const updateData = {
+      ...rawUpdateData,
+      sampleAnswer: rawUpdateData.sampleAnswer === null ? undefined : rawUpdateData.sampleAnswer,
+      answerGuidelines: rawUpdateData.answerGuidelines === null ? undefined : rawUpdateData.answerGuidelines,
+    };
     
     const question = await updateQuestion(questionId, user.id, updateData);
     

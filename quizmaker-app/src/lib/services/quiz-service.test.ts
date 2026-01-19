@@ -53,7 +53,7 @@ describe("Quiz Service", () => {
       vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockInstructor);
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
       vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockQuiz);
 
@@ -107,7 +107,7 @@ describe("Quiz Service", () => {
       vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockInstructor);
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
       vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockQuiz);
 
@@ -227,7 +227,7 @@ describe("Quiz Service", () => {
         .mockResolvedValueOnce(updatedQuiz);
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await updateQuiz("quiz-123", "instructor-123", {
@@ -252,7 +252,7 @@ describe("Quiz Service", () => {
         instructor_id: "different-instructor",
       };
 
-      vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockQuiz as any);
+      vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockQuiz as Record<string, unknown>);
 
       await expect(
         updateQuiz("quiz-123", "instructor-123", { title: "New Title" })
@@ -271,11 +271,11 @@ describe("Quiz Service", () => {
       const publishedQuiz = { ...mockQuiz, is_published: 1 };
 
       vi.mocked(d1Client.executeQueryFirst)
-        .mockResolvedValueOnce(mockQuiz as any)
-        .mockResolvedValueOnce(publishedQuiz as any);
+        .mockResolvedValueOnce(mockQuiz as Record<string, unknown>)
+        .mockResolvedValueOnce(publishedQuiz as Record<string, unknown>);
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await publishQuiz("quiz-123", "instructor-123");
@@ -295,11 +295,11 @@ describe("Quiz Service", () => {
       const unpublishedQuiz = { ...mockQuiz, is_published: 0 };
 
       vi.mocked(d1Client.executeQueryFirst)
-        .mockResolvedValueOnce(mockQuiz as any)
-        .mockResolvedValueOnce(unpublishedQuiz as any);
+        .mockResolvedValueOnce(mockQuiz as Record<string, unknown>)
+        .mockResolvedValueOnce(unpublishedQuiz as Record<string, unknown>);
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       const result = await unpublishQuiz("quiz-123", "instructor-123");
@@ -315,10 +315,10 @@ describe("Quiz Service", () => {
         instructor_id: "instructor-123",
       };
 
-      vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockQuiz as any);
+      vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockQuiz as Record<string, unknown>);
       vi.mocked(d1Client.executeMutation).mockResolvedValueOnce({
         success: true,
-        meta: {} as any,
+        meta: {} as Record<string, unknown>,
       });
 
       await deleteQuiz("quiz-123", "instructor-123");
@@ -335,7 +335,7 @@ describe("Quiz Service", () => {
         instructor_id: "different-instructor",
       };
 
-      vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockQuiz as any);
+      vi.mocked(d1Client.executeQueryFirst).mockResolvedValueOnce(mockQuiz as Record<string, unknown>);
 
       await expect(deleteQuiz("quiz-123", "instructor-123")).rejects.toThrow(
         "You do not have permission"

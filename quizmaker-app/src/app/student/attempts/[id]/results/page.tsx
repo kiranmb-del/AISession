@@ -46,7 +46,7 @@ export default async function QuizResultsPage({ params }: PageProps) {
 
             <div className="pt-4">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                Attempt ID: {params.id}
+                Attempt ID: {id}
               </p>
               <Link href="/student/dashboard">
                 <Button className="gap-2">

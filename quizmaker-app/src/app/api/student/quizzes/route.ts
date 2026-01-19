@@ -3,12 +3,12 @@
  * GET /api/student/quizzes - Get all published quizzes for students to browse
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getPublishedQuizzes } from "@/lib/services/quiz-service";
 import { getQuestionsByQuiz } from "@/lib/services/quiz-service";
 import { getCurrentUser } from "@/lib/auth";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Verify user is authenticated and is a student
     const user = await getCurrentUser();

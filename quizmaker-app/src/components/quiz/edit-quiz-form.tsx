@@ -40,7 +40,7 @@ export function EditQuizForm({ quizId }: EditQuizFormProps) {
     const fetchQuiz = async () => {
       try {
         const response = await fetch(`/api/quizzes/${quizId}`);
-        const data = await response.json();
+        const data = await response.json() as { quiz: Quiz; error?: string };
 
         if (!response.ok) {
           throw new Error(data.error || "Failed to fetch quiz");
@@ -83,7 +83,7 @@ export function EditQuizForm({ quizId }: EditQuizFormProps) {
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json() as { error?: string };
 
       if (!response.ok) {
         throw new Error(data.error || "Failed to update quiz");
